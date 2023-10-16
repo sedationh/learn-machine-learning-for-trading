@@ -3,6 +3,7 @@
 import os
 import pandas as pd
 
+
 def symbol_to_path(symbol, base_dir="data"):
     """Return CSV file path given ticker symbol."""
     return os.path.join(base_dir, "{}.csv".format(str(symbol)))
@@ -26,7 +27,8 @@ def get_data(symbols, dates):
         df_temp = df_temp.rename(columns={'Adj Close': symbol})
 
         # Join the data for the symbol with the main DataFrame
-        df = df.join(df_temp)
+        # https://poe.com/s/S0v6bTzq9ffUA2bLN9Ac
+        df = df.join(df_temp, how="inner")
 
         if symbol == 'SPY':  # drop dates SPY did not trade
             df = df.dropna(subset=['SPY'])
